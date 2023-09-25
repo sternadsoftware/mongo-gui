@@ -4,3 +4,4 @@ client/node_modules/
 client/dist
 launch.json
 .idea/
+public/
