@@ -2,10 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ApiService } from '../api.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { EJSON, ObjectId } from 'bson';
-import {
-  NzNotificationService,
-  NzTreeHigherOrderServiceToken,
-} from 'ng-zorro-antd';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 import * as _ from 'lodash';
 
 const Papa = require('papaparse');
@@ -89,7 +86,7 @@ export class CollectionComponent implements OnInit {
     )
       .subscribe((documents: any) => {
         this.data = EJSON.deserialize(documents);
-        this.count = this.data.count;      
+        this.count = this.data.count;
         if (this.searchMode === 'advanced') this.closeAdvancedSearchForm();
         if (this.searchMode === 'prompt' && this.prompt) {
           this.filter = JSON.stringify(this.data.query);

@@ -18,7 +18,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "src/favicon.ico",
               "src/assets",
@@ -27,6 +27,9 @@
                 "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
                 "output": "/assets/"
               },
+              { "glob": "**/*",
+                "input": "node_modules/monaco-editor",
+                "output": "./assets/monaco/" },
               { "glob": "**/*",
                 "input": "node_modules/ngx-monaco-editor/assets/monaco",
                 "output": "./assets/monaco/"
@@ -49,7 +52,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -125,5 +127,7 @@
       }
     }
   },
-  "defaultProject": "ui"
+  "cli": {
+    "analytics": false
+  }
 }
