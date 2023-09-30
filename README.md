@@ -72,17 +72,13 @@ Available options:
 - -p: port, mongo-gui listens on this port
 
 ## Authentication in Mongo GUI
-When you want to use the interface on a remote server, you need to protect your data. Mongo-gui provides you with a simple authentication facility for this. This is completely optional, if you don't want authorization you don't use it. To use authorization, follow these steps:
+When you want to use the interface on a remote server, you need to protect your data. Mongo-gui provides you with a simple authentication facility for this. Follow these steps:
 - Create a ```.env ``` file in the main directory.
 - In this file, create ```MONGOGUI_USERNAME=<your_username>``` variable for your username and ```MONGOGUI_PASSWORD="<your_password>"``` variable for your password.
 - Restart your server.
+- You should now be able to open the login form and successfully login. Note: under the hood a JWT token is used, it is stored in the Browser localStorage.
 
-That's it. If you are working on your own computer, or if you do not need security, you can turn off the variables you have defined in the ```.env ``` file by putting a comment before them, e.g.
-- ```#MONGOGUI_USERNAME=<your_username>```
 
-Or you can delete your ```.env ``` file.
-
-So mongo-gui will now continue to run without asking for authorization. Don't forget to restart your server after these actions!
 
 ## Setting Up the OpenAI Prompt Query
 

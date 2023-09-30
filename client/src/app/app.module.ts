@@ -12,7 +12,6 @@ import { CollectionComponent } from './collection/collection.component';
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { Type, HasMoreText, IsExpandable, FormatValue } from './common/pipes/pipes';
 import { FileSizePipe } from './common/pipes/file-size.pipe';
-import { HttpErrorInterceptor } from './common/interceptors/http-error.interceptor';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
@@ -34,7 +33,9 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzTableModule } from 'ng-zorro-antd/table';
-
+import { AuthModule } from './auth/auth.module';
+import { MongoClientComponent } from './mongo-client/mongo-client.component';
+import { AuthInterceptor } from './auth/auth.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,9 +46,11 @@ import { NzTableModule } from 'ng-zorro-antd/table';
     FormatValue,
     FileSizePipe,
     CollectionComponent,
+    MongoClientComponent,
   ],
   imports: [
     BrowserModule,
+    AuthModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
@@ -77,7 +80,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
   ],
   providers: [ApiService, { provide: NZ_I18N, useValue: en_US }, {
     provide: HTTP_INTERCEPTORS,
-    useClass: HttpErrorInterceptor,
+    useClass: AuthInterceptor,
     multi: true
   }],
   bootstrap: [AppComponent],

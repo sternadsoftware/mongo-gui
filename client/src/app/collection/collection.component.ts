@@ -3,7 +3,7 @@ import { ApiService } from '../api.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { EJSON, ObjectId } from 'bson';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
-import * as _ from 'lodash';
+import * as _ from 'lodash-es';
 
 const Papa = require('papaparse');
 

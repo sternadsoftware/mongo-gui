@@ -1,0 +1,35 @@
+<div class='login-container'>
+  <div class='logo'>
+    <i nz-icon nzType='code' nzTheme='outline'></i>
+    <span>Mongo GUI</span>
+  </div>
+
+  <nz-card class='login-card'>
+    <form nz-form [formGroup]='loginForm' (ngSubmit)='onSubmit()'>
+      <nz-form-item>
+        <nz-form-control [nzValidateStatus]="loginForm.controls['username']" nzHasFeedback>
+          <input nz-input formControlName='username' placeholder='Username' />
+
+          <ng-container
+            *ngIf="loginForm.controls['username'].hasError('required') && loginForm.controls['username'].touched">
+            Username is required
+          </ng-container>
+
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control [nzValidateStatus]="loginForm.controls['password']" nzHasFeedback>
+          <input nz-input formControlName='password' type='password' placeholder='Password' />
+          <ng-container
+            *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched">
+            Password is required
+          </ng-container>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+            <button nz-button nzType='primary' type='submit'>Login</button>
+      </nz-form-item>
+      <nz-alert *ngIf="errorMessage" nzType="error" [nzMessage]="errorMessage"></nz-alert>
+    </form>
+  </nz-card>
+</div>

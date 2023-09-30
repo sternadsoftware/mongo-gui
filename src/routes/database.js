@@ -11,6 +11,6 @@ router.use('/:dbName/collections', collectionsRoute);
 router.get('/', commonCtrl.listDatabases);
 
 // drops database
-router.delete('/:dbName', commonCtrl.dropDB);
+router.delete('/:dbName',commonCtrl.dropDB);
 
 module.exports = router;

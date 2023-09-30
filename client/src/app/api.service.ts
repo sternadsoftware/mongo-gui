@@ -74,6 +74,13 @@ export class ApiService {
       body
     );
   }
+
+  login(username:string , password: string) {
+    return this.http.post(
+      `${this.apiRoot}/authenticate`,
+      { username, password });
+  }
+
   dropDB(body) {
     return this.http.delete(`${this.BASE_URL}/${body.database}`);
   }
