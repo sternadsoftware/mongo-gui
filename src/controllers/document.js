@@ -155,11 +155,12 @@ const filter = async (req, res, next) => {
     query = await getQueryFromPrompt(req) || req.body || {};
     const options = req.query || {};
     const skip = Number(options.skip) || 0;
+    const limit = Number(options.limit) || 0;
     const documentId = req.documentId;
     if (documentId) query._id = documentId;
-    const documents = await model.find(query, options).toArray();
+    const result = await model.find(query, { 'skip' : skip, 'limit' : limit}).toArray();
     const count = await model.countDocuments(query, options);
-    // const [documents, count] = await Promise.all([getDocuments, getCount])
+    const documents = result[0].paginatedResults;
     let data = {
       documents,
       count,

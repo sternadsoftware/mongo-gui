@@ -9,14 +9,19 @@ class Model {
   }
 
   find(query, filter = {}) {
-    let records = this.collection.find(query);
-    if (filter.limit) {
-      records = records.limit(+filter.limit);
-    }
-    if (filter.skip) {
-      records = records.skip(+filter.skip);
-    }
-    return records;
+    const pipeline = [
+      {
+        $facet: {
+          paginatedResults: [
+            { $match: query },
+            { $skip: filter.skip },
+            { $limit: filter.limit },
+          ]
+        },
+      },
+    ];
+    return this.collection.aggregate(pipeline);
+
   }
 
   findOne(query) {
