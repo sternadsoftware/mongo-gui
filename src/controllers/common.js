@@ -11,18 +11,6 @@ function listDatabases(req, res, next) {
           .then(collections => {
             collections = collections.filter(collection => !collection.name.startsWith('system.'));
             let proms = [];
-            // collections.forEach(collection => {
-            //   proms.push(dataAccessAdapter.ConnectToCollection(
-            //     db.name,
-            //     collection.name
-            //   ).stats()
-            //     .then((stats) => {
-            //       collection.stats = {
-            //         count: stats.count,
-            //         size: stats.totalSize
-            //       };
-            //     }));
-            // });
             Promise.all(proms)
               .then(() => {
                 db.collections = collections.map(collection => { 
@@ -54,14 +42,25 @@ function listCollections(req, res, next) {
       collections = collections.filter(collection => !collection.name.startsWith('system.'));
       let proms = [];
       collections.forEach(collection => {
-        proms.push(dataAccessAdapter.ConnectToCollection(
-          dbName,
-          collection.name
-        ).stats()
+
+        const pipeline = [
+          {
+            $collStats: {
+              latencyStats: { histograms: true },
+              storageStats: { scale: 1 },
+              count: {},
+              //  since 4.4 queryExecStats: {}
+            }
+          }
+        ];
+        proms.push(
+          dataAccessAdapter.ConnectToCollection(
+            dbName,
+            collection.name).aggregate(pipeline).toArray()
           .then((stats) => {
             collection.stats = {
-              count: stats.count,
-              size: stats.totalSize
+              count: stats["0"].count,
+              size: stats["0"].storageStats.storageSize
             };
           }));
       });

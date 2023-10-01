@@ -13,9 +13,13 @@ class DataBase {
 
   static InitDB(app) {
     const url = argv.u || process.env.URL || 'mongodb://localhost:27017';
-
-    console.log(`> Connecting to mongoDB @ ${url}`);
-    mongoClient.connect(url, { useUnifiedTopology: true })
+    const tlsCAFile = process.env.CA_FILE || '';
+    const options = {}
+    if (!!tlsCAFile) {
+      options.tlsCAFile = tlsCAFile;
+      options.tlsInsecure = true;
+    }
+    mongoClient.connect(url, options)
       .then(client => {
         if (!client) {
           console.log('> Failed to connect mongoDB -  no client');

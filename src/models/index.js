@@ -52,7 +52,17 @@ class Model {
   }
 
   stats() {
-    return this.collection.stats();
+    const pipeline = [
+      {
+        $collStats: {
+          latencyStats: { histograms: true },
+          storageStats: { scale: 1 },
+          count: {},
+          queryExecStats: {}
+        }
+      }
+    ];
+    return this.collection.aggregate(pipeline).toArray();
   }
 }
 
